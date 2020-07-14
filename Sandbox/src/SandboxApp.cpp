@@ -1,44 +1,22 @@
-#include <Window.h>
+#include <D3DMaker.h>
 
-void MouseCallback(MouseEvent& me) {
-    std::string out = "X: ";
-    out += std::to_string(me.GetPosX());
-    out += ", Y: ";
-    out += std::to_string(me.GetPosY());
-    out += "\n";
-    OutputDebugStringA(out.c_str());
-}
-void KeyboardCallback(KeyboardEvent& kbe) {
-    std::string out = "";
-    if (kbe.IsPress()) {
-        out += "Press: ";
-    }
-    if (kbe.IsRelease()) {
-        out += "Release: ";
-    }
-    out += kbe.GetKeyCode();
-    out += "\n";
-    OutputDebugStringA(out.c_str());
-}
-int CALLBACK WinMain(
-    HINSTANCE hInstance,
-    HINSTANCE hPrevInstance,
-    LPSTR     lpCmdLine,
-    int       nShowCmd
-) {
-    Window wnd;
-    if (!wnd.Initialize(hInstance, "Window", "D3DW", 1280, 720)) {
-        return -1;
-    }
+class Sandbox : public DM::Application {
+public:
+    virtual void OnRun() override {
 
-    wnd.SetMouseCallback(MouseCallback);
-    wnd.SetKeyCallback(KeyboardCallback);
+    }
+    virtual void OnKeyboardEvent(KeyboardEvent& kbe) override {
 
-    while (wnd.ProcessMessages()) {
-        wnd.Update();
+    }
+    virtual void OnMouseEvent(MouseEvent& me) override {
+
+    }
+    virtual void OnRender(Graphics& g) override {
         float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-        wnd.GetGraphics().GetContext()->ClearRenderTargetView(wnd.GetGraphics().GetTarget().Get(), bgcolor);
-        wnd.SwapBuffers();
+        g.GetContext()->ClearRenderTargetView(g.GetTarget().Get(), bgcolor);
     }
-    return 0;
+};
+
+DM::Application* DM::CreateApplication() {
+    return new Sandbox();
 }
